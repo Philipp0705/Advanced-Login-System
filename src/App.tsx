@@ -4,15 +4,15 @@ export default function App() {
   //Variables
   const [site, setSite] = useState("Web")
   const [button, setButton] = useState("Login/Register")
-
+  const [used_email, setUsed_email] = useState('')
+  const [used_password, setUsed_password] = useState('')
   //Functions
   function LoginPage() { //Login Screen
     //Variablen
     const [panel, setPanel] = useState<any>(<Login />)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [used_email, setUsed_email] = useState('')
-    const [used_password, setUsed_password] = useState('')
+
     //Funktionen
     function SystemChange() {
       function switchToLogin() {
