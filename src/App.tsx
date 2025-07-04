@@ -1,8 +1,7 @@
 import {useState} from 'react';
 
 //Login Screen
-
-export default function App(){
+function LoginPage(){
   //Variablen
   const [panel, setPanel] = useState<any>(<Login />)
   const [email, setEmail] = useState('')
@@ -58,3 +57,32 @@ export default function App(){
     </>
   );
 }
+
+//Website
+function Web(){
+  return(
+    <div>
+      <h1>Dies ist deine Startseite</h1>
+    </div>
+  );
+}
+
+//Anzeige
+export default function App(){
+  //Variablen
+  const [site, setSite] = useState("Web")
+  const [button, setButton] = useState("Login/Register")
+
+  //Funktionen
+  function changeSite(){
+    site == "Web" ? setSite("Login") : setSite("Web")
+  }
+
+  //Output
+  return(
+    <div>
+      <button onClick={changeSite}>{site == "Web" ? "Login/Register" : "Zurück"}</button>
+      {site == "Login" ? <LoginPage /> : <Web />}
+    </div>
+  );
+} 
