@@ -9,7 +9,10 @@ export default function App() {
   function LoginPage() { //Login Screen
     //Variablen
     const [panel, setPanel] = useState<any>(<Login />)
-
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [used_email, setUsed_email] = useState('')
+    const [used_password, setUsed_password] = useState('')
     //Funktionen
     function SystemChange() {
       function switchToLogin() {
@@ -27,22 +30,20 @@ export default function App() {
     }
 
     function Login() {
-      //Variablen
+      //Variables
       const [email, setEmail] = useState('')
       const [password, setPassword] = useState('')
-      let used_email = "test"
-      let used_password = "123"
 
       //Funktionen
       function testLogin() {
-        if (email == used_email && password == used_password) {
+        if (email == used_email && password == used_password && email != "" && password != "") {
           setSite("Admin")
         } else {
-          console.log("Falsche Daten")
+          alert("Die eingegebenen Daten gehören keinem Account an!")
         }
       }
 
-      //Output
+      //Output Login
       return (
         <div>
           <h1>Login</h1>
@@ -51,25 +52,47 @@ export default function App() {
           <input type="text" placeholder="Passwort" value={password} onChange={(e) => setPassword(e.target.value)} />
           <br />
           <button onClick={testLogin}>Login</button>
-          <br />
+          <br /><br />
         </div>
       );
     }
 
     function Register() {
+      //Variables
+      const [email, setEmail] = useState('')
+      const [password, setPassword] = useState('')
+      const [repeat_password, setRepeat_Password] = useState('')
+
+      //Functions
+      function test_register() {
+        if (password.includes(" ") || email.includes(" ")) {
+          alert("No Spaces are allowed!")
+        } else if (password != repeat_password) {
+          alert("Passwords are not matching!")
+        } else if (password != '' && email != '') {
+          setUsed_password(password)
+          setUsed_email(email)
+          alert("Successfully created new account!")
+          console.log({ used_password })
+        } else alert("Please fill out every box!")
+      }
+
+      //Output Register
       return (
         <div>
           <h1>Register</h1>
-          <input type="text" placeholder="E-Mail" />
+          <input type="text" placeholder="E-Mail" value={email} onChange={(e) => setEmail(e.target.value)} />
           <br />
-          <input type="text" placeholder="Passwort" />
+          <input type="text" placeholder="Passwort" value={password} onChange={(e) => setPassword(e.target.value)} />
           <br />
-          <input type="text" placeholder="Passwort wiederholen" />
+          <input type="text" placeholder="Passwort wiederholen" value={repeat_password} onChange={(e) => setRepeat_Password(e.target.value)} />
+          <br />
+          <button onClick={test_register}>Register</button>
         </div>
       );
     }
 
-    //Output
+    //Look of Login Page
     return (
       <>
         {panel}
@@ -102,7 +125,7 @@ export default function App() {
   //Output
   return ( //Main Frame
     <div>
-      <button onClick={changeSite}>{site == "Web" ? "Login/Register" : "Zurück"}</button>
+      <button onClick={changeSite}>{site == "Web" ? "Login/Register" : site == "Admin" ? "Logout" : "Zurück"}</button>
       {site == "Admin" ? <AdminPanel /> : site == "Login" ? <LoginPage /> : <Web />}
     </div>
   );
